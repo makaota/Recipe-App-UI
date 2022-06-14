@@ -16,8 +16,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import makaota.app.recipeappui.ui.theme.DarkGreen
@@ -35,7 +38,15 @@ fun HomeScreen() {
         Column {
             TopMessageSection()
             SearchSection()
-            ChipSection(chips = listOf("All","Sushi","Burger"))
+            ChipSection(chips = listOf("All", "Sushi", "Burger"))
+            CardSection(
+                recipesCads = listOf(
+                    RecipeCard(
+                        "Grilled Salmon Sushi Roll Sauce",
+                        R.drawable.grilled_salmon_sushi_roll_sauce, "12 Ingredients" + "|", "40 min"
+                    )
+                )
+            )
         }
     }
 
@@ -151,4 +162,118 @@ fun ChipSection(chips: List<String>) {
         }
     }
 
+}
+
+@Composable
+fun CardSection(recipesCads: List<RecipeCard>) {
+
+    BoxWithConstraints(
+        //  Modifier.MaxHeight()
+    )
+    {
+        Row(
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp)
+        )
+        {
+
+            Column(verticalArrangement = Arrangement.SpaceBetween) {
+                LazyRow(
+                    //  cells = GridCells.Fixed(1),
+                    contentPadding = PaddingValues(start = 7.5.dp, end = 7.5.dp),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    items(recipesCads.size) {
+                        CardSectionItem(recipeCard = recipesCads[it])
+                        // Spacer(modifier = Modifier.width(15.dp))
+
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun CardSectionItem(recipeCard: RecipeCard) {
+
+    Box(
+      //  modifier = Modifier.fillMaxSize()
+    ) {
+        Card(
+            Modifier.size(350.dp),
+            RoundedCornerShape(15.dp),
+            elevation = 10.dp
+        )
+
+        {
+            Image(
+                painter = painterResource(id = recipeCard.image),
+                contentDescription = "",
+                contentScale = ContentScale.Crop
+            )
+            Box(
+                Modifier
+                    .fillMaxSize()
+                    .background(
+                        Brush.verticalGradient(
+                            colors = listOf(
+                                Color.Transparent,
+                                Color.Black
+                            )
+                        )
+                    )
+            )
+            Box(contentAlignment = Alignment.Center) {
+                Text(
+                    text = recipeCard.title,
+                    style = MaterialTheme.typography.h2,
+                    textAlign = TextAlign.Center
+
+                )
+            }
+            Box(
+                contentAlignment = Alignment.BottomCenter,
+                modifier = Modifier.padding(bottom = 20.dp)
+            ) {
+                Text(
+                    text = recipeCard.aboutIngredients,
+                    style = MaterialTheme.typography.body1,
+                    textAlign = TextAlign.Center
+
+                )
+            }
+
+            Box(
+                contentAlignment = Alignment.BottomCenter,
+                modifier = Modifier.padding(bottom = 20.dp)
+            ) {
+                Text(
+                    text = recipeCard.timeToCook,
+                    style = MaterialTheme.typography.body1,
+                    textAlign = TextAlign.Center
+
+                )
+            }
+
+            Box(   contentAlignment = Alignment.BottomCenter,
+                modifier = Modifier.padding(bottom = 20.dp)) {
+
+                Card(Modifier.size(70.dp)
+                    .background(Color.Black), RoundedCornerShape(10.dp)) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_turned_in),
+                        contentDescription = "",
+                        //contentScale = ContentScale.Crop
+                    )
+
+                }
+            }
+
+        }
+
+    }
 }
