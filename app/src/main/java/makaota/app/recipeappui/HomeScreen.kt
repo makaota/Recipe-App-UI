@@ -43,7 +43,9 @@ fun HomeScreen() {
                 recipesCads = listOf(
                     RecipeCard(
                         "Grilled Salmon Sushi Roll Sauce",
-                        R.drawable.grilled_salmon_sushi_roll_sauce, "12 Ingredients" + "|", "40 min"
+                        R.drawable.grilled_salmon_sushi_roll_sauce,
+                        "12 Ingredients " + "|",
+                        "40 min"
                     )
                 )
             )
@@ -201,10 +203,10 @@ fun CardSection(recipesCads: List<RecipeCard>) {
 fun CardSectionItem(recipeCard: RecipeCard) {
 
     Box(
-      //  modifier = Modifier.fillMaxSize()
+        //  modifier = Modifier.fillMaxSize()
     ) {
         Card(
-            Modifier.size(350.dp),
+            Modifier.fillMaxHeight().width(350.dp),
             RoundedCornerShape(15.dp),
             elevation = 10.dp
         )
@@ -223,11 +225,12 @@ fun CardSectionItem(recipeCard: RecipeCard) {
                             colors = listOf(
                                 Color.Transparent,
                                 Color.Black
-                            )
+                            ), startY = 300f
                         )
                     )
             )
-            Box(contentAlignment = Alignment.Center) {
+            Box(contentAlignment = Alignment.BottomStart,
+                modifier = Modifier.padding(start = 20.dp ,bottom = 55.dp)) {
                 Text(
                     text = recipeCard.title,
                     style = MaterialTheme.typography.h2,
@@ -235,39 +238,66 @@ fun CardSectionItem(recipeCard: RecipeCard) {
 
                 )
             }
-            Box(
-                contentAlignment = Alignment.BottomCenter,
-                modifier = Modifier.padding(bottom = 20.dp)
-            ) {
-                Text(
-                    text = recipeCard.aboutIngredients,
-                    style = MaterialTheme.typography.body1,
-                    textAlign = TextAlign.Center
 
-                )
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.Bottom
+            ) {
+                Box(
+                    contentAlignment = Alignment.BottomStart,
+                    modifier = Modifier.padding(20.dp)
+
+                ) {
+                    Text(
+                        text = recipeCard.aboutIngredients,
+                        style = MaterialTheme.typography.body1,
+                        textAlign = TextAlign.Center
+
+                    )
+
+                }
+
+                Box(
+                    contentAlignment = Alignment.BottomStart,
+                    modifier = Modifier.padding(bottom = 20.dp)
+                ) {
+                    Text(
+                        text = recipeCard.timeToCook,
+                        style = MaterialTheme.typography.body1,
+                        textAlign = TextAlign.Center
+
+                    )
+                }
             }
 
+
             Box(
-                contentAlignment = Alignment.BottomCenter,
-                modifier = Modifier.padding(bottom = 20.dp)
+                contentAlignment = Alignment.TopEnd,
+                modifier = Modifier.padding(20.dp)
             ) {
-                Text(
-                    text = recipeCard.timeToCook,
-                    style = MaterialTheme.typography.body1,
-                    textAlign = TextAlign.Center
 
-                )
-            }
 
-            Box(   contentAlignment = Alignment.BottomCenter,
-                modifier = Modifier.padding(bottom = 20.dp)) {
+                Card(Modifier.size(50.dp), RoundedCornerShape(10.dp)) {
 
-                Card(Modifier.size(70.dp)
-                    .background(Color.Black), RoundedCornerShape(10.dp)) {
-                    Icon(
+                    Box(
+                        Modifier
+                            .fillMaxSize()
+                            .background(
+                                Brush.verticalGradient(
+                                    colors = listOf(
+                                        Color.Transparent,
+                                        Color.Black
+                                    ), startY = 299f, 30f
+                                )
+                            )
+                    )
+
+                    Image(
                         painter = painterResource(id = R.drawable.ic_turned_in),
                         contentDescription = "",
-                        //contentScale = ContentScale.Crop
+                        contentScale = ContentScale.Crop
                     )
 
                 }
