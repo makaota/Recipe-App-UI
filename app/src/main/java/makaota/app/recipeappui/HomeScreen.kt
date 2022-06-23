@@ -2,6 +2,7 @@ package makaota.app.recipeappui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -18,6 +19,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Blue
+import androidx.compose.ui.graphics.Color.Companion.DarkGray
+import androidx.compose.ui.graphics.Color.Companion.Green
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -30,7 +34,7 @@ import makaota.app.recipeappui.ui.theme.Linen
 @Composable
 fun HomeScreen() {
 
-    Box(
+    BoxWithConstraints(
         modifier = Modifier
             .background(color = Linen)
             .fillMaxSize()
@@ -42,14 +46,25 @@ fun HomeScreen() {
             CardSection(
                 recipesCads = listOf(
                     RecipeCard(
-                        "Grilled Salmon Sushi Roll Sauce",
+                        "Grilled Salmon Sushi \nRoll Sauce",
                         R.drawable.grilled_salmon_sushi_roll_sauce,
-                        "12 Ingredients " + "|",
-                        "40 min"
-                    )
+                        "12 Ingredients | 40 min"
+                    ),
+                    RecipeCard("Grilled Salmon Sushi Roll with Cheese on Top",
+                        R.drawable.grilled_salmon_sushi_roll_with_cheese_on_top,
+                    "15 Ingredients | 120 min")
                 )
             )
+
         }
+        BottomMenuSection(
+            item = listOf(
+                BottomMenuContent("", R.drawable.ic_home),
+                BottomMenuContent("", R.drawable.ic_turned_in),
+                BottomMenuContent("", R.drawable.ic_bag),
+                BottomMenuContent("", R.drawable.ic_person)
+            ), modifier = Modifier.align(Alignment.BottomCenter)
+        )
     }
 
 
@@ -83,6 +98,10 @@ fun SearchSection() {
 
     val textFieldState = remember {
         mutableStateOf("")
+    }
+
+    val searchFilter = remember {
+        mutableStateOf(0)
     }
 
     Row(
@@ -125,10 +144,14 @@ fun SearchSection() {
             )
         }
 
-        Image(
-            painter = painterResource(id = R.drawable.ic_menu),
-            contentDescription = "search",
-        )
+
+            Image(
+                painter = painterResource(id = R.drawable.ic_menu),
+                contentDescription = "search",
+                modifier = Modifier.clickable {
+
+                }
+            )
     }
 
 }
@@ -169,15 +192,14 @@ fun ChipSection(chips: List<String>) {
 @Composable
 fun CardSection(recipesCads: List<RecipeCard>) {
 
-    BoxWithConstraints(
-        //  Modifier.MaxHeight()
+    Box(
+
     )
     {
         Row(
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
-                .fillMaxWidth()
                 .padding(10.dp)
         )
         {
@@ -186,11 +208,10 @@ fun CardSection(recipesCads: List<RecipeCard>) {
                 LazyRow(
                     //  cells = GridCells.Fixed(1),
                     contentPadding = PaddingValues(start = 7.5.dp, end = 7.5.dp),
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
                 ) {
                     items(recipesCads.size) {
                         CardSectionItem(recipeCard = recipesCads[it])
-                        // Spacer(modifier = Modifier.width(15.dp))
 
                     }
                 }
@@ -203,10 +224,14 @@ fun CardSection(recipesCads: List<RecipeCard>) {
 fun CardSectionItem(recipeCard: RecipeCard) {
 
     Box(
-        //  modifier = Modifier.fillMaxSize()
+        Modifier.padding(start = 25.dp)
+
     ) {
         Card(
-            Modifier.fillMaxHeight().width(350.dp),
+            Modifier
+                .height(350.dp)
+                .width(300.dp)
+                .padding(0.dp),
             RoundedCornerShape(15.dp),
             elevation = 10.dp
         )
@@ -215,7 +240,10 @@ fun CardSectionItem(recipeCard: RecipeCard) {
             Image(
                 painter = painterResource(id = recipeCard.image),
                 contentDescription = "",
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.clickable {
+
+                }
             )
             Box(
                 Modifier
@@ -229,12 +257,15 @@ fun CardSectionItem(recipeCard: RecipeCard) {
                         )
                     )
             )
-            Box(contentAlignment = Alignment.BottomStart,
-                modifier = Modifier.padding(start = 20.dp ,bottom = 55.dp)) {
+            Box(
+                contentAlignment = Alignment.BottomStart,
+                modifier = Modifier.padding(start = 20.dp, bottom = 55.dp)
+
+            ) {
                 Text(
                     text = recipeCard.title,
                     style = MaterialTheme.typography.h2,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Left
 
                 )
             }
@@ -257,18 +288,6 @@ fun CardSectionItem(recipeCard: RecipeCard) {
 
                     )
 
-                }
-
-                Box(
-                    contentAlignment = Alignment.BottomStart,
-                    modifier = Modifier.padding(bottom = 20.dp)
-                ) {
-                    Text(
-                        text = recipeCard.timeToCook,
-                        style = MaterialTheme.typography.body1,
-                        textAlign = TextAlign.Center
-
-                    )
                 }
             }
 
@@ -297,7 +316,10 @@ fun CardSectionItem(recipeCard: RecipeCard) {
                     Image(
                         painter = painterResource(id = R.drawable.ic_turned_in),
                         contentDescription = "",
-                        contentScale = ContentScale.Crop
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.clickable {
+
+                        }
                     )
 
                 }
@@ -305,5 +327,75 @@ fun CardSectionItem(recipeCard: RecipeCard) {
 
         }
 
+    }
+}
+
+@Composable
+fun BottomMenuSection(
+    item: List<BottomMenuContent>,
+    modifier: Modifier = Modifier,
+    initialSelectedItemIndex: Int = 0
+
+) {
+
+    var selectedItemIndex by remember {
+        mutableStateOf(initialSelectedItemIndex)
+    }
+
+
+    BottomNavigation(
+        backgroundColor = (Color(0XFFE9DCC9)),
+        modifier = modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(15.dp, 15.dp, 0.dp, 0.dp))
+            .border(1.dp, Color(0xFF006400), RoundedCornerShape(15.dp))
+    ) {
+        item.forEachIndexed { index, item ->
+            BottomMenuItem(
+                item = item,
+                isSelected = index == selectedItemIndex,
+
+                ) {
+                selectedItemIndex = index
+            }
+        }
+    }
+}
+
+@Composable
+fun BottomMenuItem(
+    item: BottomMenuContent,
+    isSelected: Boolean = false,
+    activeHighLightColor: Color = Color.Magenta,
+    activeTextColor: Color = Color.Black,
+    inactiveTextColor: Color = DarkGray,
+    onItemClick: () -> Unit
+) {
+
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+        modifier = Modifier.clickable {
+            onItemClick()
+        }
+    ) {
+
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .padding(15.dp)
+
+                //  .background(if (isSelected) activeHighLightColor else Color.Transparent)
+
+                .height(70.dp)
+        ) {
+            Icon(
+                painter = painterResource(id = item.image),
+                contentDescription = item.title,
+                tint = if (isSelected) activeTextColor else inactiveTextColor,
+                modifier = Modifier.size(30.dp)
+
+            )
+        }
     }
 }
