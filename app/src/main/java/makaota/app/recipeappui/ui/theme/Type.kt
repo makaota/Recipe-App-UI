@@ -24,11 +24,19 @@ val Mukta = FontFamily(
 // Set of Material typography styles to start with
 val Typography = Typography(
     body1 = TextStyle(
+        color = Color.Black,
+        fontFamily = Mukta,
+        fontWeight = FontWeight.Normal,
+        fontSize = 15.sp
+    ),
+
+    body2 = TextStyle(
         color = Color.White,
         fontFamily = Mukta,
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp
     ),
+
     h1 = TextStyle(
         color = Color.Black,
         fontFamily = Mukta,

@@ -124,7 +124,7 @@ fun SearchSection() {
                 placeholder = {
                     Text(
                         text = "Search, Destination",
-                        //style = MaterialTheme.typography.h3,
+                        style = MaterialTheme.typography.body1,
                     )
                 },
                 leadingIcon = {
@@ -136,7 +136,7 @@ fun SearchSection() {
                 //textStyle = MaterialTheme.typography.h3,
 
                 colors = TextFieldDefaults.outlinedTextFieldColors(
-                    focusedBorderColor = Color.Magenta,
+                    focusedBorderColor = Color(0xFF006400),
                     unfocusedBorderColor = Color((0xE9DCC9))// linen
                 ),
                 shape = RoundedCornerShape(25.dp)
@@ -229,7 +229,7 @@ fun CardSectionItem(recipeCard: RecipeCard) {
     ) {
         Card(
             Modifier
-                .height(350.dp)
+                .height(340.dp)
                 .width(300.dp)
                 .padding(0.dp),
             RoundedCornerShape(15.dp),
@@ -283,7 +283,7 @@ fun CardSectionItem(recipeCard: RecipeCard) {
                 ) {
                     Text(
                         text = recipeCard.aboutIngredients,
-                        style = MaterialTheme.typography.body1,
+                        style = MaterialTheme.typography.body2,
                         textAlign = TextAlign.Center
 
                     )
