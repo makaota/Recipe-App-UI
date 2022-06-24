@@ -48,5 +48,11 @@ val Typography = Typography(
         fontFamily = Mukta,
         fontWeight = FontWeight.Bold,
         fontSize = 25.sp
+    ),
+    h3 = TextStyle(
+        color = Color.White,
+        fontFamily = Mukta,
+        fontWeight = FontWeight.Bold,
+        fontSize = 5.sp
     )
 )

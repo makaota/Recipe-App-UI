@@ -242,9 +242,7 @@ fun CardSectionItem(recipeCard: RecipeCard) {
                 .padding(0.dp),
             RoundedCornerShape(15.dp),
             elevation = 10.dp
-        )
-
-        {
+        ) {
             Image(
                 painter = painterResource(id = recipeCard.image),
                 contentDescription = "",
@@ -307,8 +305,6 @@ fun CardSectionItem(recipeCard: RecipeCard) {
                 contentAlignment = Alignment.TopEnd,
                 modifier = Modifier.padding(20.dp)
             ) {
-
-
                 Card(Modifier.size(50.dp), RoundedCornerShape(10.dp)) {
 
                     Box(
