@@ -1,5 +1,6 @@
 package makaota.app.recipeappui
 
+import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -23,12 +24,15 @@ import androidx.compose.ui.graphics.Color.Companion.Blue
 import androidx.compose.ui.graphics.Color.Companion.DarkGray
 import androidx.compose.ui.graphics.Color.Companion.Green
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat.startActivity
 import makaota.app.recipeappui.ui.theme.DarkGreen
 import makaota.app.recipeappui.ui.theme.Linen
+
 
 
 @Composable
@@ -50,9 +54,11 @@ fun HomeScreen() {
                         R.drawable.grilled_salmon_sushi_roll_sauce,
                         "12 Ingredients | 40 min"
                     ),
-                    RecipeCard("Grilled Salmon Sushi Roll with Cheese on Top",
+                    RecipeCard(
+                        "Grilled Salmon Sushi Roll with Cheese on Top",
                         R.drawable.grilled_salmon_sushi_roll_with_cheese_on_top,
-                    "15 Ingredients | 120 min")
+                        "15 Ingredients | 120 min"
+                    )
                 )
             )
 
@@ -145,13 +151,13 @@ fun SearchSection() {
         }
 
 
-            Image(
-                painter = painterResource(id = R.drawable.ic_menu),
-                contentDescription = "search",
-                modifier = Modifier.clickable {
+        Image(
+            painter = painterResource(id = R.drawable.ic_menu),
+            contentDescription = "search",
+            modifier = Modifier.clickable {
 
-                }
-            )
+            }
+        )
     }
 
 }
@@ -223,6 +229,8 @@ fun CardSection(recipesCads: List<RecipeCard>) {
 @Composable
 fun CardSectionItem(recipeCard: RecipeCard) {
 
+    val context = LocalContext.current
+
     Box(
         Modifier.padding(start = 25.dp)
 
@@ -242,6 +250,9 @@ fun CardSectionItem(recipeCard: RecipeCard) {
                 contentDescription = "",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.clickable {
+
+                    val detailsActivity = Intent(context, DetailsActivity::class.java)
+                    context.startActivity(detailsActivity)
 
                 }
             )
@@ -368,7 +379,7 @@ fun BottomMenuItem(
     isSelected: Boolean = false,
     activeHighLightColor: Color = Color.Magenta,
     activeTextColor: Color = Color.Black,
-    inactiveTextColor: Color = DarkGray,
+    inactiveTextColor: Color = Color.DarkGray,
     onItemClick: () -> Unit
 ) {
 

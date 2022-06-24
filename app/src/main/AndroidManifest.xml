@@ -10,6 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RecipeAppUI">
         <activity
+            android:name=".DetailsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_details"
+            android:theme="@style/Theme.RecipeAppUI" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
