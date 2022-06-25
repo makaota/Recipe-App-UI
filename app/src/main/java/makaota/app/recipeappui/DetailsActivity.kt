@@ -2,17 +2,22 @@ package makaota.app.recipeappui
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Space
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -23,7 +28,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -43,7 +50,14 @@ class DetailsActivity : ComponentActivity() {
 
                 Column {
                     TopSection()
-                    ImageSection()
+                    ImageSection(
+                        imageItems = listOf(
+                            ImageItem(
+                                R.drawable.grilled_salmon_sushi_roll_sauce
+                            )
+
+                        )
+                    )
                     IngredientsAndServingSection()
                     IngredientsSection()
                     ButtonSection()
@@ -103,7 +117,7 @@ fun ImageSection() {
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
-            .fillMaxWidth()
+            .width(400.dp)
             .padding(15.dp)
     ) {
 
@@ -157,6 +171,111 @@ fun ImageSection() {
 }
 
 @Composable
+fun ImageSection(imageItems: List<ImageItem>) {
+
+    Box(
+
+    )
+    {
+        Row(
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .padding(10.dp)
+        )
+        {
+
+            Column(verticalArrangement = Arrangement.SpaceBetween) {
+                LazyRow(
+                    //  cells = GridCells.Fixed(1),
+                    contentPadding = PaddingValues(start = 7.5.dp, end = 7.5.dp),
+                    modifier = Modifier
+                ) {
+                    items(imageItems.size) {
+                        ImageItemSection(imageItem = imageItems[it])
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun ImageItemSection(imageItem: ImageItem) {
+
+    Card(
+        Modifier
+            .height(250.dp)
+            .width(360.dp)
+            .padding(0.dp),
+        RoundedCornerShape(15.dp),
+        elevation = 15.dp
+    ) {
+        Image(
+            painter = painterResource(id = imageItem.image),
+            contentDescription = "",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.clickable {
+
+//                    val detailsActivity = Intent(context, DetailsActivity::class.java)
+//                    context.startActivity(detailsActivity)
+
+            }
+        )
+        Box(
+            Modifier
+                .fillMaxSize()
+                .background(
+                    Brush.verticalGradient(
+                        colors = listOf(
+                            Color.Transparent,
+                            Color.Black
+                        ), startY = 300f
+                    )
+                )
+        )
+
+
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.padding(20.dp)
+        ) {
+            Card(
+                Modifier.size(50.dp),
+                CircleShape
+            ) {
+
+                Box(
+                    Modifier
+                        .fillMaxSize()
+                        .background(
+                            Brush.verticalGradient(
+                                colors = listOf(
+                                    Color.Transparent,
+                                    Color.Black
+                                ), startY = 299f, 30f
+                            )
+                        )
+                )
+
+                Image(
+                    painter = painterResource(id = R.drawable.ic_play_arrow),
+                    contentDescription = "",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.clickable {
+
+                    }
+                )
+
+            }
+
+        }
+
+    }
+
+}
+
+@Composable
 fun IngredientsAndServingSection() {
 
 
@@ -182,15 +301,25 @@ fun IngredientsAndServingSection() {
         ///////////////////////
 
         var expanded by remember { mutableStateOf(false) }
-        val suggestions = listOf("Item1", "Item2", "Item3")
+        val suggestions = listOf("2 Serving", "3 Serving", "4 Serving")
 
         Box {
-            Button(onClick = { expanded = !expanded }) {
-                Text("DropDown")
-                Icon(
-                    imageVector = Icons.Filled.ArrowDropDown,
-                    contentDescription = null,
+            Button(
+                onClick = {
+                    expanded = !expanded
+                }, colors = ButtonDefaults.buttonColors(
+                    backgroundColor = Color(0xFF006400),
+                contentColor = Color.White)
+            ) {
+                Text(
+                    text = "1 Serving",
+                    style = MaterialTheme.typography.body2
                 )
+                Icon(
+                    imageVector = Icons.Filled.KeyboardArrowDown,
+                    contentDescription = null,
+
+                    )
             }
             DropdownMenu(
                 expanded = expanded,
@@ -218,7 +347,7 @@ fun IngredientsSection() {
     var item = "1 teaspoon"
 
     Row(
-        horizontalArrangement = Arrangement.SpaceBetween,
+        horizontalArrangement = Arrangement.SpaceAround,
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
@@ -236,17 +365,18 @@ fun IngredientsSection() {
 
                 }
         )
-        Column(verticalArrangement = Arrangement.Center) {
-
             Text(
                 text = title,
-                style = MaterialTheme.typography.body1
+                style = MaterialTheme.typography.body1,
+                textAlign = TextAlign.Left
             )
 
-        }
+
+
         Text(
             text = item,
-            style = MaterialTheme.typography.body1
+            style = MaterialTheme.typography.body1,
+
         )
 
     }
@@ -255,7 +385,7 @@ fun IngredientsSection() {
     item = "200 gr"
 
     Row(
-        horizontalArrangement = Arrangement.SpaceBetween,
+        horizontalArrangement = Arrangement.SpaceAround,
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
@@ -273,15 +403,11 @@ fun IngredientsSection() {
 
                 }
         )
-        Column(verticalArrangement = Arrangement.Center) {
-
             Text(
                 text = title,
-                style = MaterialTheme.typography.body1
+                style = MaterialTheme.typography.body1,
+                textAlign = TextAlign.Left
             )
-
-        }
-
 
         Text(
             text = item,
@@ -295,7 +421,7 @@ fun IngredientsSection() {
     item = "400 gr"
 
     Row(
-        horizontalArrangement = Arrangement.SpaceBetween,
+        horizontalArrangement = Arrangement.SpaceAround,
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
@@ -309,14 +435,13 @@ fun IngredientsSection() {
                 .width(50.dp)
                 .height(40.dp)
         )
-        Column(verticalArrangement = Arrangement.Center) {
 
             Text(
                 text = title,
-                style = MaterialTheme.typography.body1
+                style = MaterialTheme.typography.body1,
+                textAlign = TextAlign.Left
             )
 
-        }
 
         Text(
             text = item,
@@ -327,17 +452,32 @@ fun IngredientsSection() {
 }
 
 @Composable
-fun ButtonSection(){
+fun ButtonSection() {
 
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
-    ){
-        Button(onClick = {
+    ) {
+        Button(
+            onClick = {},
+            shape = RoundedCornerShape(10.dp),
+            colors = ButtonDefaults.buttonColors(
+            backgroundColor = Color.Black,
+            contentColor = Color.White
+            ),
+            modifier = Modifier
+                .width(200.dp)
+                .height(60.dp)
+        ) {
+            Text(text = "Start Cook!", style = MaterialTheme.typography.body2)
+            Spacer(modifier = Modifier.width(35.dp))
+            Icon(
+                imageVector = Icons.Filled.ArrowForward,
+                contentDescription = null,
 
-        }) {
-            Text(text = "Navigate", fontSize = 18.sp)
+                )
+
 
         }
     }
