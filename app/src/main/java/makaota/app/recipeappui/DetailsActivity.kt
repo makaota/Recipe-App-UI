@@ -206,7 +206,7 @@ fun ImageItemSection(imageItem: ImageItem) {
     Card(
         Modifier
             .height(250.dp)
-            .width(360.dp)
+            .width(350.dp)
             .padding(0.dp),
         RoundedCornerShape(15.dp),
         elevation = 15.dp

@@ -237,8 +237,8 @@ fun CardSectionItem(recipeCard: RecipeCard) {
     ) {
         Card(
             Modifier
-                .height(340.dp)
-                .width(300.dp)
+                .height(300.dp)
+                .width(250.dp)
                 .padding(0.dp),
             RoundedCornerShape(15.dp),
             elevation = 10.dp
@@ -350,13 +350,24 @@ fun BottomMenuSection(
     }
 
 
-    BottomNavigation(
-        backgroundColor = (Color(0XFFE9DCC9)),
+//    BottomNavigation(
+//        backgroundColor = (Color(0XFFE9DCC9)),
+//        modifier = modifier
+//            .fillMaxWidth()
+//            .clip(RoundedCornerShape(15.dp, 15.dp, 0.dp, 0.dp))
+//            .border(1.dp, Color(0xFF006400), RoundedCornerShape(15.dp))
+//    )
+
+    Row(
+        horizontalArrangement = Arrangement.SpaceAround,
+        verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(15.dp, 15.dp, 0.dp, 0.dp))
-            .border(1.dp, Color(0xFF006400), RoundedCornerShape(15.dp))
-    ) {
+           // .background(DeepBlue)
+            .height(80.dp)
+            .padding(bottom = 0.dp)
+    )
+    {
         item.forEachIndexed { index, item ->
             BottomMenuItem(
                 item = item,
