@@ -289,7 +289,7 @@ fun IngredientsAndServingSection() {
             .padding(15.dp)
     ) {
 
-        Column(verticalArrangement = Arrangement.Center) {
+        Column(verticalArrangement = Arrangement.SpaceBetween) {
 
             Text(
                 text = title,
@@ -347,7 +347,7 @@ fun IngredientsSection() {
     var item = "1 teaspoon"
 
     Row(
-        horizontalArrangement = Arrangement.SpaceAround,
+        horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
@@ -365,19 +365,26 @@ fun IngredientsSection() {
 
                 }
         )
+
+        Box(modifier = Modifier.padding(0.dp), contentAlignment = Alignment.CenterStart) {
             Text(
                 text = title,
                 style = MaterialTheme.typography.body1,
-                textAlign = TextAlign.Left
+                textAlign = TextAlign.Left,
+                modifier = Modifier.padding(end = 78.dp)
+            )
+        }
+
+
+
+
+            Text(
+                text = item,
+                style = MaterialTheme.typography.body1,
+                textAlign = TextAlign.Right
+
             )
 
-
-
-        Text(
-            text = item,
-            style = MaterialTheme.typography.body1,
-
-        )
 
     }
 
@@ -385,7 +392,7 @@ fun IngredientsSection() {
     item = "200 gr"
 
     Row(
-        horizontalArrangement = Arrangement.SpaceAround,
+        horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
@@ -403,15 +410,20 @@ fun IngredientsSection() {
 
                 }
         )
+
+        Box(modifier = Modifier.padding(0.dp), contentAlignment = Alignment.CenterStart) {
             Text(
                 text = title,
                 style = MaterialTheme.typography.body1,
-                textAlign = TextAlign.Left
+                textAlign = TextAlign.Left,
+                modifier = Modifier.padding(end = 96.dp)
             )
+        }
 
         Text(
             text = item,
-            style = MaterialTheme.typography.body1
+            style = MaterialTheme.typography.body1,
+            textAlign = TextAlign.Right
         )
 
 
@@ -421,7 +433,7 @@ fun IngredientsSection() {
     item = "400 gr"
 
     Row(
-        horizontalArrangement = Arrangement.SpaceAround,
+        horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
@@ -436,16 +448,20 @@ fun IngredientsSection() {
                 .height(40.dp)
         )
 
+        Box(modifier = Modifier.padding(0.dp), contentAlignment = Alignment.CenterStart) {
             Text(
                 text = title,
                 style = MaterialTheme.typography.body1,
-                textAlign = TextAlign.Left
+                textAlign = TextAlign.Left,
+                modifier = Modifier.padding(end = 112.dp)
             )
+        }
 
 
         Text(
             text = item,
-            style = MaterialTheme.typography.body1
+            style = MaterialTheme.typography.body1,
+            textAlign = TextAlign.Right
         )
     }
 
@@ -456,7 +472,7 @@ fun ButtonSection() {
 
     Column(
         modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Button(
